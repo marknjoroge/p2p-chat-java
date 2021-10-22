@@ -32,12 +32,13 @@ public class Main {
     // );
     int opt = 0;
     Scanner sc = new Scanner(System.in);
-    while (opt != 3) {
 
-      System.out.println("Enter port number: ");
-      int myPort = sc.nextInt();
-      System.out.println("Enter port number: ");
-      int otherPort = sc.nextInt();
+    System.out.println("Enter your port number: ");
+    int myPort = sc.nextInt();
+    System.out.println("Enter your peer's port number: ");
+    int otherPort = sc.nextInt();
+
+    while (opt != 3) {
       System.out.println("1. Send\n2. Receive");
       opt = sc.nextInt();
       switch (opt) {
@@ -52,7 +53,7 @@ public class Main {
           break;
         case 2:
           try {
-            receiver.receive();
+            receiver.receive(myPort);
           } catch (Exception e) {
             e.printStackTrace();
           }

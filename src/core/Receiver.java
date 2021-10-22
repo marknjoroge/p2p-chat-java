@@ -7,12 +7,15 @@ import java.util.Arrays;
 /**
  * Created by Rahimi on 12/22/18.
  */
-public class Receiver {
+public class Receiver extends Thread {
 
   public Receiver() {}
 
   String data = "";
   int current_offset = 0;
+  boolean running = false;
+
+  DatagramSocket ds;
 
   void append_data(StringBuilder __data) {
     String _data = __data.toString();
@@ -28,7 +31,12 @@ public class Receiver {
     }
   }
 
-  public void receive() {
+  void setUp(int port) throws SocketException {
+    ds = new DatagramSocket(port);
+    running = true;
+  }
+
+  public void receive(int port) {
     // try {
     //     DatagramSocket socket = new DatagramSocket();
     //     String req = "File Request:\n" + file;
@@ -58,9 +66,10 @@ public class Receiver {
     //     e.printStackTrace();
     // }
 
-    DatagramSocket ds;
     try {
-      ds = new DatagramSocket(3000);
+      if(running == false) {
+        setUp(port);
+      }
       byte[] buf = new byte[1024];
       DatagramPacket dp = new DatagramPacket(buf, 1024);
       String str = new String(dp.getData(), 0, dp.getLength());
